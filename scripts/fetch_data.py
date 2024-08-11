@@ -7,8 +7,31 @@ from datetime import datetime
 # URL для загрузки данных
 url = "https://alltrust.me/service/export/xml"
 
-# Путь для сохранения CSV файла
-csv_file = '../data/data_log.csv'
+def find_project_root(project_name):
+    """
+    Ищет корневую директорию проекта с указанным именем, поднимаясь вверх по дереву директорий.
+
+    :param project_name: Имя корневой директории проекта
+    :return: Путь к корневой директории проекта или None, если не найдено
+    """
+    current_dir = os.path.abspath(os.getcwd())
+
+    while True:
+        if project_name in os.listdir(current_dir):
+            return os.path.join(current_dir, project_name)
+        parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir))
+        if current_dir == parent_dir:  # Достигнута корневая директория
+            return None
+        current_dir = parent_dir
+
+# Определяем корневую директорию проекта
+project_root = find_project_root("alltrust.me-exchange-rate-monitoring")
+
+if project_root is None:
+    raise FileNotFoundError("Не удалось найти корневую директорию проекта 'alltrust.me-exchange-rate-monitoring'.")
+
+# Формируем полный путь к файлу
+csv_file = os.path.join(project_root, 'data', 'data_log.csv')
 
 # Создаем директорию, если она не существует
 os.makedirs(os.path.dirname(csv_file), exist_ok=True)

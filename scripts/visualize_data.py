@@ -1,9 +1,19 @@
+import os
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import re
 
-# Путь к CSV файлу
-csv_file = '../data/data_log.csv'
+from scripts.fetch_data import find_project_root
+
+# Определяем корневую директорию проекта
+project_root = find_project_root("alltrust.me-exchange-rate-monitoring")
+
+if project_root is None:
+    raise FileNotFoundError("Не удалось найти корневую директорию проекта 'alltrust.me-exchange-rate-monitoring'.")
+
+# Формируем полный путь к файлу
+csv_file = os.path.join(project_root, 'data', 'data_log.csv')
 
 
 def extract_numeric_value(amount_str):
