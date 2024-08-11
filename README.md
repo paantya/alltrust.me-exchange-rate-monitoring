@@ -1,0 +1,1 @@
+# alltrust.me.rate
