@@ -30,8 +30,12 @@ project_root = find_project_root("alltrust.me-exchange-rate-monitoring")
 if project_root is None:
     raise FileNotFoundError("Не удалось найти корневую директорию проекта 'alltrust.me-exchange-rate-monitoring'.")
 
-# Формируем полный путь к файлу
+# Формируем полный путь к файлу data_log.csv
 csv_file = os.path.join(project_root, 'data', 'data_log.csv')
+
+# Формируем полный путь к файлу last.xml
+xml_file = os.path.join(project_root, 'data', 'last.xml')
+
 
 # Создаем директорию, если она не существует
 os.makedirs(os.path.dirname(csv_file), exist_ok=True)
@@ -50,6 +54,12 @@ def fetch_and_save_data():
     # Проверка, удалось ли загрузить данные
     if response.status_code == 200:
         xml_data = response.content
+
+        # Сохранение оригинального XML-файла
+        with open(xml_file, 'wb') as file:
+            file.write(xml_data)
+        print(f"Оригинальный XML-файл сохранен в {xml_file}")
+
         root = ET.fromstring(xml_data)
 
         data_rows = []
