@@ -116,5 +116,6 @@ def visualize_data_by_to(df):
     plt.show()
 
 
-# Вызов функции визуализации
-visualize_data_by_to(df)
+if __name__ == '__main__':
+    # Вызов функции визуализации
+    visualize_data_by_to(df)

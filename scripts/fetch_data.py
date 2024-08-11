@@ -99,5 +99,6 @@ def fetch_and_save_data():
         print(f"Не удалось загрузить данные, код ответа: {response.status_code}")
 
 
-# Вызов функции
-fetch_and_save_data()
+if __name__ == '__main__':
+    # Вызов функции
+    fetch_and_save_data()
